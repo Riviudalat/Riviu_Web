@@ -2,7 +2,6 @@ import {
   ChatsCircle,
   DownloadSimple,
   Robot,
-  Warning,
 } from "@phosphor-icons/react/dist/ssr";
 import Link from "next/link";
 import type { ChatSessionRow, ChatStats } from "../../../../lib/admin-types";
@@ -168,9 +167,7 @@ export default async function AdminChatListPage() {
           >
             Kiến thức AI
           </Link>
-          .{" "}
-          <Warning size={14} className="inline text-amber-500" /> Cần API +
-          database đang chạy.
+          .
         </p>
       </div>
     </div>

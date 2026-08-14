@@ -47,7 +47,7 @@ const COMMIT_STATS = [
   {
     icon: Eye,
     value: formatCompact(POSTS_IMPRESSIONS),
-    label: "lượt hiển thị từ 7 bài viết nổi bật đã chạy",
+    label: "lượt hiển thị từ các bài viết nổi bật đã chạy",
   },
   {
     icon: TiktokLogo,

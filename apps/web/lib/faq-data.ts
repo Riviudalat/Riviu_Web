@@ -23,6 +23,6 @@ export const DEFAULT_FAQ_ITEMS = [
   {
     question: "Số liệu kênh có đáng tin không?",
     answer:
-      "Số follower/thành viên lấy từ các fanpage và group Riviu đang vận hành. Bảy bài nổi bật trên /bang-gia kèm ảnh chụp Facebook Insights (lượt hiển thị, tiếp cận, tương tác) — không phải số ước lượng.",
+      "Số follower/thành viên lấy từ các fanpage và group Riviu đang vận hành. Các bài nổi bật trên /bang-gia kèm ảnh chụp Facebook Insights (lượt hiển thị, tiếp cận, tương tác) — không phải số ước lượng.",
   },
 ];

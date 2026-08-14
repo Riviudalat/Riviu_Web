@@ -1,4 +1,4 @@
-import { EnvelopeSimple, Phone, Warning } from "@phosphor-icons/react/dist/ssr";
+import { EnvelopeSimple, Phone } from "@phosphor-icons/react/dist/ssr";
 import type { ContactLeadRow } from "../../../../lib/admin-types";
 import { adminFetch } from "../../../../lib/server-api";
 
@@ -75,10 +75,6 @@ export default async function AdminLeadsPage() {
         </div>
       )}
 
-      <p className="mt-6 flex items-start gap-2 text-sm text-ink-soft">
-        <Warning size={16} className="mt-0.5 shrink-0 text-amber-500" />
-        Cần API + database đang chạy. Form không gửi email — chỉ lưu tại đây.
-      </p>
     </div>
   );
 }

@@ -45,7 +45,7 @@ Ký hiệu: ⬜ chưa làm · 🚧 đang làm · ✅ hoàn thành
 | Layout sidebar | ✅ | Phosphor icons; badge số form/chat mới |
 | Dashboard traffic (Recharts) | ✅ | Realtime, 30 ngày; hover dòng section hiện card “khách đang xem” (trang + anchor + mô tả) |
 | Editor kéo-thả (Puck) | ✅ | /admin/editor, Publish → PUT /api/content/home; Services có ImageField từng thẻ; Stats/kênh sửa số + ảnh |
-| Bài nổi bật CMS (/admin/insights) | ✅ | Form 7 bài (ảnh + 3 số) → PUT /api/content/bang-gia |
+| Bài nổi bật CMS (/admin/insights) | ✅ | Thêm/xóa/sửa bài; upload ảnh (không hiện đường dẫn file) → PUT /api/content/bang-gia |
 | Block cơ bản (page builder) | ✅ | Heading, Text, Image, Button, Quote, Video, Spacer, Divider + Columns DropZone lồng nhau |
 | Biến thể layout section | ✅ | Hero split/center, Services stack/list/grid, nền, đảo vị trí, paddingY |
 | Section Hệ sinh thái kênh trong Puck | ✅ | Sửa kicker/tiêu đề/mô tả/nền + mảng kênh (ảnh bìa upload, tên, loại, follower, tick xanh) |
@@ -55,7 +55,7 @@ Ký hiệu: ⬜ chưa làm · 🚧 đang làm · ✅ hoàn thành
 | Xem hội thoại AI (/admin/chat) | ✅ | Cả hàng bấm được; câu hỏi đầu + số tin; chi tiết `pre-wrap` đủ thread |
 | Form liên hệ (/admin/leads) | ✅ | Tên, SĐT, email, nội dung, thời gian |
 | Toast + badge inbox | ✅ | Poll `/api/admin/inbox` ~8s; toast góc phải; đánh dấu đã xem bằng localStorage |
-| Kiến thức AI (/admin/knowledge) | ✅ | Thêm/sửa/xóa chủ đề + từ khóa; không upload/gửi PDF |
+| Kiến thức AI (/admin/knowledge) | ✅ | Thêm/sửa/xóa chủ đề + từ khóa; form mở khi cần, chip từ khóa |
 | Cấu hình AI (/admin/settings) | ✅ | Bật/tắt, baseURL, model, API key (che), system prompt, nút test kết nối |
 | Xuất & phân tích hội thoại | ✅ | Stats (tổng, % fallback), xuất CSV/JSON, badge nguồn AI/Kiến thức/Fallback |
 
@@ -132,3 +132,4 @@ Ký hiệu: ⬜ chưa làm · 🚧 đang làm · ✅ hoàn thành
 | 2026-08-14 | Agent (Cursor) | Badge Phổ biến góc phải xoay chéo; bảng chi tiết 3 cột (Dịch vụ / Thông tin gạch đầu dòng / Thành tiền), bỏ ĐVT | apps/web/components/package-detail-table.tsx, pricing-board.tsx |
 | 2026-08-14 | Agent (Cursor) | Bỏ nút Thu gọn/Chi tiết — bảng giá chi tiết luôn hiện dưới từng slide gói | apps/web/components/pricing-board.tsx |
 | 2026-08-14 | Agent (Cursor) | Nav overlay trên thẻ giá; bỏ Hỏi Riviu; link Facebook kênh; lưu form ContactLead + /admin/leads; chat log đủ (chào + bảng text, 16k); toast/badge inbox admin | apps/web, apps/api |
+| 2026-08-14 | Agent (Cursor) | Admin Insights: thêm/xóa bài, ẩn path `/network/…`; Knowledge bỏ note PDF, form gọn hơn; gỡ note “Cần API + database” | apps/web/components/admin, leads, chat |

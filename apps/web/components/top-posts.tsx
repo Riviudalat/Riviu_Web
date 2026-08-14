@@ -39,7 +39,7 @@ export function TopPosts({ posts }: { posts?: TopPost[] }) {
             Số liệu Facebook Insights từ bài đã chạy
           </h2>
           <p className="mt-2 max-w-2xl text-sm text-ink-soft">
-            Bảy ảnh chụp báo cáo thật — hiện một lần trên trang này.
+            Ảnh chụp báo cáo Insights từ các bài đã chạy.
           </p>
         </Reveal>
 

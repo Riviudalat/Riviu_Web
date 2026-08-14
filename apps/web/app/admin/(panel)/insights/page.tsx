@@ -16,8 +16,8 @@ export default async function AdminInsightsPage() {
     <div className="mx-auto max-w-5xl">
       <h1 className="text-2xl font-black">Bài viết nổi bật</h1>
       <p className="mt-1 max-w-2xl text-sm text-ink-soft">
-        Bảy ảnh Facebook Insights trên trang /bang-gia. Đổi ảnh và số liệu tại
-        đây — trang chủ và chat không lặp lại lưới này.
+        Ảnh và số liệu Insights hiện trên trang bảng giá. Upload ảnh mới, sửa
+        số, hoặc thêm bài — không cần dán đường dẫn file.
       </p>
       <div className="mt-6">
         <InsightsForm initial={posts} />

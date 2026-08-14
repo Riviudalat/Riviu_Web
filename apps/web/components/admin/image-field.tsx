@@ -8,9 +8,12 @@ import { mediaUrl } from "../../lib/api";
 export function ImageField({
   value,
   onChange,
+  showUrl = true,
 }: {
   value: string | undefined;
   onChange: (value: string) => void;
+  /** Ẩn ô đường dẫn kỹ thuật (dùng trên /admin/insights). */
+  showUrl?: boolean;
 }) {
   const inputRef = useRef<HTMLInputElement>(null);
   const [uploading, setUploading] = useState(false);
@@ -31,7 +34,7 @@ export function ImageField({
         error?: string;
       };
       if (!res.ok || !json.url) {
-        setError(json.error ?? "Tải ảnh thất bại — kiểm tra API đang chạy");
+        setError(json.error ?? "Không tải được ảnh. Thử lại sau.");
         return;
       }
       onChange(json.url);
@@ -51,7 +54,7 @@ export function ImageField({
           alt="Xem trước"
           style={{
             width: "100%",
-            height: 120,
+            height: showUrl ? 120 : 160,
             objectFit: "cover",
             borderRadius: 8,
             border: "1px solid rgba(0,0,0,0.1)",
@@ -73,19 +76,21 @@ export function ImageField({
         </div>
       )}
 
-      <input
-        type="text"
-        value={value ?? ""}
-        placeholder="Dán URL ảnh hoặc upload bên dưới"
-        onChange={(event) => onChange(event.target.value)}
-        style={{
-          width: "100%",
-          padding: "8px 10px",
-          borderRadius: 6,
-          border: "1px solid rgba(0,0,0,0.15)",
-          fontSize: 13,
-        }}
-      />
+      {showUrl ? (
+        <input
+          type="text"
+          value={value ?? ""}
+          placeholder="Dán URL ảnh hoặc upload bên dưới"
+          onChange={(event) => onChange(event.target.value)}
+          style={{
+            width: "100%",
+            padding: "8px 10px",
+            borderRadius: 6,
+            border: "1px solid rgba(0,0,0,0.15)",
+            fontSize: 13,
+          }}
+        />
+      ) : null}
 
       <button
         type="button"

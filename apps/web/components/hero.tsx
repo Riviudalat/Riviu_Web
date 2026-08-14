@@ -85,7 +85,7 @@ const PROOF_METRICS = [
   {
     icon: Eye,
     value: formatCompact(POSTS_IMPRESSIONS),
-    label: "lượt hiển thị từ 7 bài thật",
+    label: "lượt hiển thị từ bài thật",
   },
   {
     icon: TiktokLogo,

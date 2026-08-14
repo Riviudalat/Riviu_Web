@@ -142,7 +142,7 @@ export const SECTION_BLURBS: Record<string, string> = {
   "goi-xay-kenh": "Xây kênh TikTok hoặc Fanpage riêng cho quán.",
   "tat-ca-goi": "Tab Facebook / Bài đăng / TikTok / Khác — mỗi gói một slide vuốt ngang.",
   "he-sinh-thai": "Sáu fanpage/group Riviu đang vận hành.",
-  "hieu-qua": "Bảy bài nổi bật kèm số liệu Facebook Insights.",
+  "hieu-qua": "Các bài nổi bật kèm số liệu Facebook Insights.",
   "quy-trinh": "Bốn bước hợp tác từ brief tới báo cáo.",
   "nen-tang": "Section ứng dụng cũ — đã gỡ khỏi trang.",
   "an-tuong": "Dải đen điểm nhấn + chữ chạy.",
