@@ -19,7 +19,7 @@ Ký hiệu: ⬜ chưa làm · 🚧 đang làm · ✅ hoàn thành
 | FAQ | ✅ | Accordion; nội dung công ty truyền thông (không còn câu hỏi kiểu app) |
 | Liên hệ (contact) | ✅ | POST `/api/contact` (SĐT bắt buộc) rồi hiện cảm ơn; lỗi thì báo gửi lại |
 | Footer | ✅ | Pháp lý RIVICO |
-| Chat widget Trợ lý Riviu | ✅ | Tag còn sau khi chat; chọn nhóm → bảng thu gọn; log lời chào + bản text bảng giá |
+| Chat widget Trợ lý Riviu | ✅ | Markdown in đậm/list; cuộn trong khung (Lenis prevent + min-h-0); log đủ lượt |
 | Tracker client (pageview/section/click) | ✅ | Gửi kèm `path` để dashboard biết section thuộc trang nào |
 | Render nội dung từ Puck/DB | ✅ | page.tsx fetch /api/content/home, fallback mặc định |
 | SEO kỹ thuật | ✅ | metadata/OG/twitter, robots.ts, sitemap.ts, opengraph-image (font Việt), JSON-LD Organization+WebSite+FAQPage; SEO title/desc chỉnh được từ editor |
@@ -133,3 +133,4 @@ Ký hiệu: ⬜ chưa làm · 🚧 đang làm · ✅ hoàn thành
 | 2026-08-14 | Agent (Cursor) | Bỏ nút Thu gọn/Chi tiết — bảng giá chi tiết luôn hiện dưới từng slide gói | apps/web/components/pricing-board.tsx |
 | 2026-08-14 | Agent (Cursor) | Nav overlay trên thẻ giá; bỏ Hỏi Riviu; link Facebook kênh; lưu form ContactLead + /admin/leads; chat log đủ (chào + bảng text, 16k); toast/badge inbox admin | apps/web, apps/api |
 | 2026-08-14 | Agent (Cursor) | Admin Insights: thêm/xóa bài, ẩn path `/network/…`; Knowledge bỏ note PDF, form gọn hơn; gỡ note “Cần API + database” | apps/web/components/admin, leads, chat |
+| 2026-08-14 | Agent (Cursor) | Chat: render **in đậm** + danh sách; lăn chuột trong khung hội thoại (data-lenis-prevent, min-h-0) | apps/web/components/chat-widget.tsx, chat-markdown.tsx |

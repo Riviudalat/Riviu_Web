@@ -5,6 +5,7 @@ import {
   CHAT_SOURCE_LABELS,
   type ChatSessionDetail,
 } from "../../../../../lib/admin-types";
+import { ChatMarkdown } from "../../../../../components/chat-markdown";
 import { adminFetch } from "../../../../../lib/server-api";
 
 export const dynamic = "force-dynamic";
@@ -47,7 +48,7 @@ export default async function AdminChatDetailPage({
                 : "rounded-bl-md border border-black/5 bg-neutral-50 text-ink"
             }`}
           >
-            <p className="whitespace-pre-wrap break-words">{message.content}</p>
+            <ChatMarkdown text={message.content} />
             <p
               className={`mt-1 flex items-center gap-1.5 text-[10px] ${
                 message.role === "user" ? "text-white/70" : "text-ink-soft"

@@ -11,6 +11,7 @@ import {
   type PricingTableId,
 } from "../lib/chat-pricing";
 import { tablesToChatText } from "../lib/package-tables";
+import { ChatMarkdown } from "./chat-markdown";
 import { ChatPricingMenu, ChatPricingTable } from "./chat-pricing-cards";
 
 type ChatMessage = {
@@ -198,6 +199,7 @@ export function ChatWidget() {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 24, scale: 0.96 }}
             transition={{ duration: 0.25, ease: [0.21, 0.65, 0.36, 1] }}
+            data-lenis-prevent
             className="fixed right-5 bottom-22 z-50 flex h-[520px] w-[360px] max-w-[calc(100vw-2.5rem)] flex-col overflow-hidden rounded-2xl border border-black/10 bg-white shadow-2xl md:right-8 md:bottom-26"
           >
             <div className="flex items-center gap-3 bg-brand-500 px-5 py-4 text-white">
@@ -220,7 +222,8 @@ export function ChatWidget() {
 
             <div
               ref={scrollRef}
-              className="flex-1 space-y-3 overflow-y-auto bg-neutral-50 p-4"
+              data-lenis-prevent
+              className="min-h-0 flex-1 space-y-3 overflow-y-auto overscroll-contain bg-neutral-50 p-4"
             >
               {messages.map((message, index) =>
                 message.role === "user" ? (
@@ -228,7 +231,7 @@ export function ChatWidget() {
                     key={index}
                     className="ml-auto max-w-[85%] rounded-2xl rounded-br-md bg-brand-500 px-4 py-2.5 text-sm leading-relaxed text-white"
                   >
-                    <p className="whitespace-pre-line">{message.content}</p>
+                    <ChatMarkdown text={message.content} />
                   </div>
                 ) : (
                   <div key={index} className="flex items-end gap-2">
@@ -242,7 +245,7 @@ export function ChatWidget() {
                       />
                     </span>
                     <div className="max-w-[88%] rounded-2xl rounded-bl-md border border-black/5 bg-white px-4 py-2.5 text-sm leading-relaxed text-ink">
-                      <p className="whitespace-pre-line">{message.content}</p>
+                      <ChatMarkdown text={message.content} />
                       {message.pricing === "menu" ? (
                         <ChatPricingMenu onPick={(prompt) => void send(prompt)} />
                       ) : null}
