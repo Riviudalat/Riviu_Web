@@ -10,6 +10,11 @@ import { adminFetch } from "../../../../lib/server-api";
 
 export const dynamic = "force-dynamic";
 
+function clip(value: string, max = 140): string {
+  const text = value.replace(/\s+/g, " ").trim();
+  return text.length > max ? `${text.slice(0, max)}…` : text;
+}
+
 function formatTime(value: string): string {
   return new Date(value).toLocaleString("vi-VN", {
     hour: "2-digit",
@@ -112,38 +117,43 @@ export default async function AdminChatListPage() {
         </div>
       ) : (
         <div className="mt-6 overflow-hidden rounded-2xl border border-black/10 bg-white">
-          <table className="w-full text-sm">
-            <thead>
-              <tr className="border-b border-black/10 bg-neutral-50 text-left text-xs text-ink-soft uppercase">
-                <th className="px-5 py-3">Tin nhắn gần nhất</th>
-                <th className="px-5 py-3 text-right">Số tin</th>
-                <th className="px-5 py-3 text-right">Thời gian</th>
-              </tr>
-            </thead>
-            <tbody>
-              {sessions.map((session) => (
-                <tr
-                  key={session.id}
-                  className="border-b border-black/5 transition-colors hover:bg-brand-50/50"
+          <div className="grid grid-cols-[1fr_auto_auto] gap-4 border-b border-black/10 bg-neutral-50 px-5 py-3 text-xs text-ink-soft uppercase">
+            <p>Câu hỏi đầu của khách</p>
+            <p className="text-right">Số tin</p>
+            <p className="text-right">Thời gian</p>
+          </div>
+          <ul>
+            {sessions.map((session) => (
+              <li key={session.id} className="border-b border-black/5 last:border-0">
+                <Link
+                  href={`/admin/chat/${session.id}`}
+                  className="grid grid-cols-[1fr_auto_auto] items-start gap-4 px-5 py-3 text-sm transition-colors hover:bg-brand-50/50"
                 >
-                  <td className="px-5 py-3">
-                    <Link
-                      href={`/admin/chat/${session.id}`}
-                      className="block max-w-md truncate font-semibold hover:text-brand-600"
-                    >
-                      {session.lastMessage || "(trống)"}
-                    </Link>
-                  </td>
-                  <td className="px-5 py-3 text-right">
+                  <span className="min-w-0">
+                    <span className="block font-semibold text-ink">
+                      {clip(
+                        session.firstUserMessage ||
+                          session.lastMessage ||
+                          "(trống)",
+                      )}
+                    </span>
+                    {session.lastMessage &&
+                    session.lastMessage !== session.firstUserMessage ? (
+                      <span className="mt-1 block text-xs text-ink-soft">
+                        Gần nhất: {clip(session.lastMessage)}
+                      </span>
+                    ) : null}
+                  </span>
+                  <span className="pt-0.5 text-right font-semibold">
                     {session.messageCount}
-                  </td>
-                  <td className="px-5 py-3 text-right text-ink-soft">
+                  </span>
+                  <span className="pt-0.5 text-right text-ink-soft">
                     {formatTime(session.lastMessageAt)}
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+                  </span>
+                </Link>
+              </li>
+            ))}
+          </ul>
         </div>
       )}
 

@@ -9,6 +9,7 @@ import {
 } from "@phosphor-icons/react";
 import { motion, useReducedMotion } from "motion/react";
 import { useState, type FormEvent } from "react";
+import { API_BASE } from "../lib/api";
 import { sectionPad, type SectionPadding } from "../lib/section-utils";
 import { Magnetic } from "./effects/magnetic";
 
@@ -41,10 +42,39 @@ export function Contact(props: ContactProps) {
   const [phone, setPhone] = useState("");
   const [message, setMessage] = useState("");
   const [sent, setSent] = useState(false);
+  const [sending, setSending] = useState(false);
+  const [error, setError] = useState("");
 
-  const handleSubmit = (event: FormEvent) => {
+  const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
-    setSent(true);
+    if (sending) return;
+    setSending(true);
+    setError("");
+    try {
+      const res = await fetch(`${API_BASE}/api/contact`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name, email, phone, message }),
+      });
+      const json = (await res.json().catch(() => ({}))) as {
+        message?: string | string[];
+      };
+      if (!res.ok) {
+        const detail = Array.isArray(json.message)
+          ? json.message.join(" ")
+          : json.message;
+        throw new Error(detail ?? "Không gửi được. Thử lại hoặc gọi hotline.");
+      }
+      setSent(true);
+    } catch (err) {
+      setError(
+        err instanceof Error
+          ? err.message
+          : "Không gửi được. Thử lại hoặc gọi hotline.",
+      );
+    } finally {
+      setSending(false);
+    }
   };
 
   const resetForm = () => {
@@ -53,6 +83,7 @@ export function Contact(props: ContactProps) {
     setPhone("");
     setMessage("");
     setSent(false);
+    setError("");
   };
 
   return (
@@ -194,6 +225,7 @@ export function Contact(props: ContactProps) {
                   type="tel"
                   value={phone}
                   onChange={(event) => setPhone(event.target.value)}
+                  required
                   placeholder="Để Riviu gọi lại"
                   className="mt-2 w-full rounded-lg border border-black/15 px-4 py-3 text-sm outline-none transition-colors focus:border-brand-500"
                 />
@@ -214,14 +246,21 @@ export function Contact(props: ContactProps) {
                   className="mt-2 w-full resize-none rounded-lg border border-black/15 px-4 py-3 text-sm outline-none transition-colors focus:border-brand-500"
                 />
 
+                {error ? (
+                  <p className="mt-4 text-sm font-semibold text-red-600">
+                    {error}
+                  </p>
+                ) : null}
+
                 <Magnetic className="mt-6" strength={0.15}>
                   <button
                     type="submit"
                     data-track="contact-submit"
-                    className="flex w-full cursor-pointer items-center justify-center gap-2 rounded-full bg-ink py-3.5 text-sm font-bold text-white transition-colors duration-300 hover:bg-brand-600"
+                    disabled={sending}
+                    className="flex w-full cursor-pointer items-center justify-center gap-2 rounded-full bg-ink py-3.5 text-sm font-bold text-white transition-colors duration-300 hover:bg-brand-600 disabled:opacity-60"
                   >
                     <PaperPlaneTilt size={16} weight="fill" />
-                    Gửi liên hệ
+                    {sending ? "Đang gửi…" : "Gửi liên hệ"}
                   </button>
                 </Magnetic>
               </form>

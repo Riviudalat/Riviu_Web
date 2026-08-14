@@ -4,7 +4,7 @@ import { CaretLeft, CaretRight } from "@phosphor-icons/react";
 import { useReducedMotion } from "motion/react";
 import { useCallback, useEffect, useRef, useState, type ReactNode } from "react";
 
-/** Một slide = một bảng đủ cột. Chiều cao theo đúng bảng đang xem. */
+/** Một slide = một gói. Nút ← → cố định trên thẻ tóm tắt, không theo chiều cao bảng. */
 export function PackageCarousel({
   items,
   ariaLabel,
@@ -63,7 +63,7 @@ export function PackageCarousel({
   if (items.length === 0) return null;
 
   return (
-    <div>
+    <div className="relative">
       <div
         ref={trackRef}
         onScroll={syncIndex}
@@ -79,7 +79,7 @@ export function PackageCarousel({
           <div
             key={itemIndex}
             data-carousel-slide
-            className="w-full min-w-full shrink-0 snap-start snap-always"
+            className="w-full min-w-full shrink-0 snap-start snap-always px-10 md:px-14"
           >
             {item}
           </div>
@@ -87,31 +87,29 @@ export function PackageCarousel({
       </div>
 
       {items.length > 1 ? (
-        <div className="mt-4 flex items-center justify-between gap-3">
-          <p className="text-xs font-bold text-ink-soft">
+        <>
+          <button
+            type="button"
+            onClick={() => go(index - 1)}
+            disabled={index === 0}
+            aria-label="Gói trước"
+            className="absolute top-28 left-0 z-10 flex h-11 w-11 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full border border-black/10 bg-white shadow-sm transition-colors hover:border-brand-500 hover:text-brand-600 disabled:cursor-default disabled:opacity-30 disabled:hover:border-black/10 disabled:hover:text-ink md:top-36"
+          >
+            <CaretLeft size={18} weight="bold" />
+          </button>
+          <button
+            type="button"
+            onClick={() => go(index + 1)}
+            disabled={index >= items.length - 1}
+            aria-label="Gói tiếp theo"
+            className="absolute top-28 right-0 z-10 flex h-11 w-11 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full bg-brand-500 text-white shadow-sm transition-colors hover:bg-brand-600 disabled:cursor-default disabled:bg-black/10 disabled:text-ink disabled:opacity-40 md:top-36"
+          >
+            <CaretRight size={18} weight="bold" />
+          </button>
+          <p className="pointer-events-none absolute top-52 left-1/2 z-10 -translate-x-1/2 rounded-full bg-white/90 px-3 py-1 text-xs font-bold text-ink-soft md:top-64">
             {index + 1} / {items.length}
           </p>
-          <div className="flex gap-2">
-            <button
-              type="button"
-              onClick={() => go(index - 1)}
-              disabled={index === 0}
-              aria-label="Gói trước"
-              className="flex h-11 w-11 cursor-pointer items-center justify-center rounded-full border border-black/10 bg-white transition-colors hover:border-brand-500 hover:text-brand-600 disabled:cursor-default disabled:opacity-30 disabled:hover:border-black/10 disabled:hover:text-ink"
-            >
-              <CaretLeft size={18} weight="bold" />
-            </button>
-            <button
-              type="button"
-              onClick={() => go(index + 1)}
-              disabled={index >= items.length - 1}
-              aria-label="Gói tiếp theo"
-              className="flex h-11 w-11 cursor-pointer items-center justify-center rounded-full bg-brand-500 text-white transition-colors hover:bg-brand-600 disabled:cursor-default disabled:bg-black/10 disabled:text-ink disabled:opacity-40"
-            >
-              <CaretRight size={18} weight="bold" />
-            </button>
-          </div>
-        </div>
+        </>
       ) : null}
     </div>
   );

@@ -18,7 +18,7 @@ export const DEFAULT_FAQ_ITEMS = [
   {
     question: "Bảng giá xem ở đâu?",
     answer:
-      "Trang /bang-gia có bảng so sánh 4 combo Facebook và tab Facebook / Bài đăng / TikTok / Khác. Mỗi gói là một thẻ giá; bấm “Xem chi tiết” để mở bảng đơn giá × số lượng × thành tiền.",
+      "Trang /bang-gia có bảng so sánh 4 combo Facebook và tab Facebook / Bài đăng / TikTok / Khác. Mỗi gói là một thẻ giá kèm bảng Dịch vụ / Thông tin / Thành tiền ngay bên dưới.",
   },
   {
     question: "Số liệu kênh có đáng tin không?",

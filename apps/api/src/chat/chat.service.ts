@@ -104,7 +104,7 @@ export class ChatService {
       data: {
         sessionId: sessionId.slice(0, 64),
         role: safeRole,
-        content: content.slice(0, 4000),
+        content: content.slice(0, 16000),
         source: source ?? (safeRole === 'assistant' ? 'fallback' : 'user'),
       },
     });
@@ -124,12 +124,28 @@ export class ChatService {
       },
     });
 
+    const firstUsers = await this.prisma.chatMessage.findMany({
+      where: {
+        sessionId: { in: sessions.map((session) => session.id) },
+        role: 'user',
+      },
+      orderBy: { createdAt: 'asc' },
+    });
+    const firstBySession = new Map<string, string>();
+    for (const row of firstUsers) {
+      if (!firstBySession.has(row.sessionId)) {
+        firstBySession.set(row.sessionId, row.content);
+      }
+    }
+
     return sessions.map((session) => ({
       id: session.id,
       createdAt: session.createdAt,
       messageCount: session._count.messages,
       lastMessage: session.messages[0]?.content ?? '',
       lastMessageAt: session.messages[0]?.createdAt ?? session.createdAt,
+      firstUserMessage:
+        firstBySession.get(session.id) ?? session.messages[0]?.content ?? '',
     }));
   }
 

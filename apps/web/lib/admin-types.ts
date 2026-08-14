@@ -27,6 +27,32 @@ export type ChatSessionRow = {
   messageCount: number;
   lastMessage: string;
   lastMessageAt: string;
+  firstUserMessage: string;
+};
+
+export type ContactLeadRow = {
+  id: string;
+  name: string;
+  email: string;
+  phone: string;
+  message: string;
+  createdAt: string;
+};
+
+export type AdminInbox = {
+  leads: number;
+  chats: number;
+  latestLead: {
+    id: string;
+    name: string;
+    phone: string;
+    createdAt: string;
+  } | null;
+  latestChat: {
+    id: string;
+    preview: string;
+    createdAt: string;
+  } | null;
 };
 
 export type ChatSessionDetail = {

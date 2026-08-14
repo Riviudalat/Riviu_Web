@@ -41,13 +41,13 @@ export default async function AdminChatDetailPage({
         {session.messages.map((message) => (
           <div
             key={message.id}
-            className={`max-w-[85%] rounded-2xl px-4 py-2.5 text-sm leading-relaxed ${
+            className={`max-w-full rounded-2xl px-4 py-2.5 text-sm leading-relaxed ${
               message.role === "user"
-                ? "ml-auto rounded-br-md bg-brand-500 text-white"
+                ? "ml-auto w-fit max-w-[90%] rounded-br-md bg-brand-500 text-white"
                 : "rounded-bl-md border border-black/5 bg-neutral-50 text-ink"
             }`}
           >
-            <p>{message.content}</p>
+            <p className="whitespace-pre-wrap break-words">{message.content}</p>
             <p
               className={`mt-1 flex items-center gap-1.5 text-[10px] ${
                 message.role === "user" ? "text-white/70" : "text-ink-soft"

@@ -102,6 +102,17 @@ model ChatMessage {
   @@index([createdAt])
 }
 
+model ContactLead {
+  id        String   @id @default(cuid())
+  name      String
+  email     String
+  phone     String
+  message   String
+  createdAt DateTime @default(now())
+
+  @@index([createdAt])
+}
+
 model AiConfig {
   id           Int      @id @default(1)
   enabled      Boolean  @default(false)

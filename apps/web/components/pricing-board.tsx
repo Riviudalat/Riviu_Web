@@ -1,14 +1,12 @@
 "use client";
 
 import {
-  CaretDown,
   Check,
   FacebookLogo,
   Note,
   Plus,
   TiktokLogo,
 } from "@phosphor-icons/react";
-import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { useEffect, useState } from "react";
 import { tablesForGroup, type DetailTableModel } from "../lib/package-tables";
 import {
@@ -19,7 +17,6 @@ import {
   MONTHLY_PACKAGE,
   TIKTOK_PACKAGES,
 } from "../lib/pricing-data";
-import { OpenChatButton } from "./open-chat-button";
 import { PackageCarousel } from "./package-carousel";
 import { PackageDetailTable } from "./package-detail-table";
 
@@ -162,8 +159,6 @@ function cardsForTab(tab: TabId): PriceCardModel[] {
 }
 
 function PackageCard({ card }: { card: PriceCardModel }) {
-  const [open, setOpen] = useState(false);
-  const reduced = useReducedMotion();
   const bullets = card.bullets.slice(0, 5);
 
   return (
@@ -222,47 +217,13 @@ function PackageCard({ card }: { card: PriceCardModel }) {
                 </li>
               ))}
             </ul>
-
-            <div className="mt-8 flex flex-col gap-2 sm:flex-row">
-              <button
-                type="button"
-                onClick={() => setOpen((value) => !value)}
-                aria-expanded={open}
-                className="inline-flex cursor-pointer items-center justify-center gap-1.5 rounded-full bg-brand-500 px-5 py-3 text-sm font-bold text-white transition-colors hover:bg-brand-600"
-              >
-                {open ? "Thu gọn" : "Chi tiết"}
-                <CaretDown
-                  size={14}
-                  weight="bold"
-                  className={`transition-transform ${open ? "rotate-180" : ""}`}
-                />
-              </button>
-              <OpenChatButton
-                track={`pricing-card-chat-${card.id}`}
-                className="inline-flex cursor-pointer items-center justify-center rounded-full border border-black/10 px-5 py-3 text-sm font-bold transition-colors hover:border-brand-500 hover:text-brand-600"
-              >
-                Hỏi Riviu
-              </OpenChatButton>
-            </div>
           </div>
         </div>
       </article>
 
-      <AnimatePresence initial={false}>
-        {open ? (
-          <motion.div
-            initial={reduced ? false : { height: 0, opacity: 0 }}
-            animate={{ height: "auto", opacity: 1 }}
-            exit={reduced ? undefined : { height: 0, opacity: 0 }}
-            transition={{ duration: 0.28, ease: [0.21, 0.65, 0.36, 1] }}
-            className="overflow-hidden"
-          >
-            <div className="pt-4">
-              <PackageDetailTable table={card.table} compact />
-            </div>
-          </motion.div>
-        ) : null}
-      </AnimatePresence>
+      <div className="pt-3">
+        <PackageDetailTable table={card.table} compact />
+      </div>
     </div>
   );
 }

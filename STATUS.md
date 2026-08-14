@@ -17,14 +17,14 @@ Ký hiệu: ⬜ chưa làm · 🚧 đang làm · ✅ hoàn thành
 | Nền tảng Riviu (features) | ✅ | Đã gỡ — Riviu chỉ là công ty truyền thông, không còn section app |
 | Cảm nhận (testimonials) | ✅ | Đã gỡ khỏi trang chủ/Puck — quote giả không còn mặc định |
 | FAQ | ✅ | Accordion; nội dung công ty truyền thông (không còn câu hỏi kiểu app) |
-| Liên hệ (contact) | ✅ | Form + SĐT; gửi xong hiện cảm ơn (sẽ liên hệ sớm hoặc gọi), không mở mailto |
+| Liên hệ (contact) | ✅ | POST `/api/contact` (SĐT bắt buộc) rồi hiện cảm ơn; lỗi thì báo gửi lại |
 | Footer | ✅ | Pháp lý RIVICO |
-| Chat widget Trợ lý Riviu | ✅ | Tag còn sau khi chat; chọn nhóm → bảng chi tiết thu gọn (không gallery Insights) |
+| Chat widget Trợ lý Riviu | ✅ | Tag còn sau khi chat; chọn nhóm → bảng thu gọn; log lời chào + bản text bảng giá |
 | Tracker client (pageview/section/click) | ✅ | Gửi kèm `path` để dashboard biết section thuộc trang nào |
 | Render nội dung từ Puck/DB | ✅ | page.tsx fetch /api/content/home, fallback mặc định |
 | SEO kỹ thuật | ✅ | metadata/OG/twitter, robots.ts, sitemap.ts, opengraph-image (font Việt), JSON-LD Organization+WebSite+FAQPage; SEO title/desc chỉnh được từ editor |
 | Trang /bang-gia (toàn bộ Cost.pdf) | ✅ | Hero + 3 số → outcomes → so sánh 4 combo → tab + slide vuốt từng gói → kênh → 7 Insights → FAQ |
-| Hệ sinh thái kênh (landing + /bang-gia) | ✅ | Landing: lưới ảnh bìa Puck, không dòng mô tả dưới tiêu đề; /bang-gia: `layout=compact` |
+| Hệ sinh thái kênh (landing + /bang-gia) | ✅ | Ảnh/thẻ bọc link Facebook (`url` + field Puck); landing lưới ảnh, /bang-gia compact |
 | Bài viết nổi bật (/bang-gia) | ✅ | Đủ 7 ảnh Insights một lần; không lặp trang chủ/chat; sửa ảnh/số tại `/admin/insights` (Page slug `bang-gia`) |
 | Hiệu ứng nâng cao | ✅ | Lenis, scroll progress, hero mask/tilt/magnetic, velocity marquee, stack cards, carousel, clip-path, chat pop-in; con trỏ cam thương hiệu + hairline trắng (không mix-blend — hết xanh trên nền cam); prefers-reduced-motion |
 | Ảnh thật (Unsplash, self-host) | ✅ | public/photos — hero card, services, phone mock, avatar |
@@ -34,7 +34,7 @@ Ký hiệu: ⬜ chưa làm · 🚧 đang làm · ✅ hoàn thành
 | Footer CTA lớn + chữ RIVIU khổng lồ | ✅ | |
 | Trang 404 thương hiệu | ✅ | app/not-found.tsx |
 | Hệ thống font việt hóa (10 font) | ✅ | lib/fonts.ts, chọn từ editor; mặc định Bricolage Grotesque (tiêu đề) + Be Vietnam Pro (nội dung), 8 font còn lại preload false |
-| Section Bảng giá tóm tắt (landing) | ✅ | Tab + mỗi gói một slide vuốt ngang; Chi tiết mở bảng dưới slide đang xem |
+| Section Bảng giá tóm tắt (landing) | ✅ | Tab + slide từng gói; ← → overlay trên thẻ; bảng luôn hiện; không nút Hỏi Riviu |
 | Avatar bot logo R | ✅ | favicon.png trong header + bubble widget |
 
 ## Admin (apps/web/app/admin)
@@ -42,7 +42,7 @@ Ký hiệu: ⬜ chưa làm · 🚧 đang làm · ✅ hoàn thành
 | Module | Trạng thái | Ghi chú |
 |---|---|---|
 | Login + guard | ✅ | Cookie httpOnly, guard trong (panel)/layout; form chỉ còn logo + 2 ô nhập |
-| Layout sidebar | ✅ | Phosphor icons |
+| Layout sidebar | ✅ | Phosphor icons; badge số form/chat mới |
 | Dashboard traffic (Recharts) | ✅ | Realtime, 30 ngày; hover dòng section hiện card “khách đang xem” (trang + anchor + mô tả) |
 | Editor kéo-thả (Puck) | ✅ | /admin/editor, Publish → PUT /api/content/home; Services có ImageField từng thẻ; Stats/kênh sửa số + ảnh |
 | Bài nổi bật CMS (/admin/insights) | ✅ | Form 7 bài (ảnh + 3 số) → PUT /api/content/bang-gia |
@@ -52,7 +52,9 @@ Ký hiệu: ⬜ chưa làm · 🚧 đang làm · ✅ hoàn thành
 | Chọn font + SEO từ editor | ✅ | Root fields: font tiêu đề/nội dung + SEO title/desc |
 | Lịch sử phiên bản + reset | ✅ | Panel trong editor — cần DB chạy để test |
 | Upload ảnh (media) | ✅ | ImageField + proxy /admin/api/media — cần API chạy để test |
-| Xem hội thoại AI (/admin/chat) | ✅ | Danh sách + chi tiết phiên |
+| Xem hội thoại AI (/admin/chat) | ✅ | Cả hàng bấm được; câu hỏi đầu + số tin; chi tiết `pre-wrap` đủ thread |
+| Form liên hệ (/admin/leads) | ✅ | Tên, SĐT, email, nội dung, thời gian |
+| Toast + badge inbox | ✅ | Poll `/api/admin/inbox` ~8s; toast góc phải; đánh dấu đã xem bằng localStorage |
 | Kiến thức AI (/admin/knowledge) | ✅ | Thêm/sửa/xóa chủ đề + từ khóa; không upload/gửi PDF |
 | Cấu hình AI (/admin/settings) | ✅ | Bật/tắt, baseURL, model, API key (che), system prompt, nút test kết nối |
 | Xuất & phân tích hội thoại | ✅ | Stats (tổng, % fallback), xuất CSV/JSON, badge nguồn AI/Kiến thức/Fallback |
@@ -61,13 +63,14 @@ Ký hiệu: ⬜ chưa làm · 🚧 đang làm · ✅ hoàn thành
 
 | Module | Trạng thái | Ghi chú |
 |---|---|---|
-| Prisma + PostgreSQL schema | ✅ | Prisma 6; SectionEvent có cột `path` (migration 20260814030000) |
+| Prisma + PostgreSQL schema | ✅ | Prisma 6; SectionEvent `path`; ContactLead (migration 20260814080000) |
 | AuthModule (JWT + seed admin) | ✅ | |
 | ContentModule | ✅ | Kèm revisions (giữ 20 bản), restore, reset (DELETE) |
 | MediaModule (upload ảnh) | ✅ | multer + JWT, serve /api/uploads, volume riviu_uploads trong compose |
 | TrackModule | ✅ | ua-parser-js, geoip-lite; section event kèm path |
 | AnalyticsModule | ✅ | summary/timeseries/devices/…/sections |
-| ChatModule (log hội thoại) | ✅ | /chat/answer: AI (nếu bật) → khớp từ khóa → fallback; source từng tin; /chat/stats + /chat/export CSV/JSON |
+| ChatModule (log hội thoại) | ✅ | /chat/answer + /chat-log; content 16k; sessions trả firstUserMessage; /chat/stats + export |
+| ContactModule (form liên hệ) | ✅ | POST /contact public; GET /contact/leads + GET /admin/inbox JWT |
 | KnowledgeModule (kiến thức AI) | ✅ | CRUD JWT + seed 9 mục từ Cost.pdf (tự bổ sung mục còn thiếu theo tiêu đề khi khởi động) + buildContext cho AI |
 | AiModule (AI thật) | ✅ | AiConfig (baseURL/model/apiKey/systemPrompt) chuẩn OpenAI-compatible, test kết nối, timeout 25s |
 | Tích hợp AI thật (assistant-ui + AI SDK) | ⬜ | Tương lai — cần API key model |
@@ -127,3 +130,5 @@ Ký hiệu: ⬜ chưa làm · 🚧 đang làm · ✅ hoàn thành
 | 2026-08-14 | Agent (Cursor) | Gỡ badge hero + mô tả kênh + intro bảng giá; subtitle dịch vụ 1 hàng; thẻ giá cùng khung; form liên hệ hiện cảm ơn / gọi lại | apps/web/components |
 | 2026-08-14 | Agent (Cursor) | Bảng giá: mỗi gói một slide vuốt ngang (hết lưới 4 cột); Chi tiết không còn vỡ layout | apps/web/components/pricing-board.tsx |
 | 2026-08-14 | Agent (Cursor) | Badge Phổ biến góc phải xoay chéo; bảng chi tiết 3 cột (Dịch vụ / Thông tin gạch đầu dòng / Thành tiền), bỏ ĐVT | apps/web/components/package-detail-table.tsx, pricing-board.tsx |
+| 2026-08-14 | Agent (Cursor) | Bỏ nút Thu gọn/Chi tiết — bảng giá chi tiết luôn hiện dưới từng slide gói | apps/web/components/pricing-board.tsx |
+| 2026-08-14 | Agent (Cursor) | Nav overlay trên thẻ giá; bỏ Hỏi Riviu; link Facebook kênh; lưu form ContactLead + /admin/leads; chat log đủ (chào + bảng text, 16k); toast/badge inbox admin | apps/web, apps/api |

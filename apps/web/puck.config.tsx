@@ -390,6 +390,7 @@ export const puckConfig: Config<PuckComponents, RootProps> = {
               ],
             },
             role: { type: "textarea", label: "Mô tả ngắn" },
+            url: { type: "text", label: "Link Facebook" },
           },
         },
       },

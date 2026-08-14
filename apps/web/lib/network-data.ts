@@ -12,6 +12,7 @@ export type Channel = {
   audience: number;
   role: string;
   image: string;
+  url: string;
 };
 
 export const CHANNELS: Channel[] = [
@@ -22,6 +23,7 @@ export const CHANNELS: Channel[] = [
     audience: 3_100_000,
     role: "Fanpage chính thức của Thánh Riviu, 2 triệu lượt thích",
     image: "/network/thanh-riviu-page.webp",
+    url: "https://www.facebook.com/thanh.riviu",
   },
   {
     name: "Thánh Riviu",
@@ -29,6 +31,7 @@ export const CHANNELS: Channel[] = [
     audience: 2_300_000,
     role: "Nhóm công khai lớn nhất hệ sinh thái Riviu",
     image: "/network/thanh-riviu-group.webp",
+    url: "https://www.facebook.com/groups/thanhriviu",
   },
   {
     name: "Review Đà Lạt",
@@ -36,6 +39,7 @@ export const CHANNELS: Channel[] = [
     audience: 1_300_000,
     role: "Review Đà Lạt - Tất Tần Tật, nhóm review chủ lực tại Đà Lạt",
     image: "/network/review-dalat-group.webp",
+    url: "https://www.facebook.com/groups/reviewdalat",
   },
   {
     name: "Đà Lạt Đi Và Trải Nghiệm",
@@ -43,6 +47,7 @@ export const CHANNELS: Channel[] = [
     audience: 884_800,
     role: "Nhóm trải nghiệm, ăn uống và du lịch Đà Lạt",
     image: "/network/dalat-trai-nghiem-group.webp",
+    url: "https://www.facebook.com/groups/dalatdivatrainghiem",
   },
   {
     name: "Riviu.vn Đà Lạt",
@@ -50,6 +55,7 @@ export const CHANNELS: Channel[] = [
     audience: 239_000,
     role: "Sưu tập các địa điểm ăn uống ở Đà Lạt",
     image: "/network/riviu-dalat-page.webp",
+    url: "https://www.facebook.com/Riviu.DaLat/",
   },
   {
     name: "Đà Lạt Đi Đâu?",
@@ -57,6 +63,7 @@ export const CHANNELS: Channel[] = [
     audience: 158_000,
     role: "Gợi ý điểm đến, định nghĩa Đà Lạt của riêng bạn",
     image: "/network/dalat-di-dau-page.webp",
+    url: "https://www.facebook.com/dalatdidau",
   },
 ];
 

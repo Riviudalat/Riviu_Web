@@ -4,6 +4,7 @@ import { AiModule } from './ai/ai.module';
 import { AnalyticsModule } from './analytics/analytics.module';
 import { AuthModule } from './auth/auth.module';
 import { ChatModule } from './chat/chat.module';
+import { ContactModule } from './contact/contact.module';
 import { ContentModule } from './content/content.module';
 import { KnowledgeModule } from './knowledge/knowledge.module';
 import { MediaModule } from './media/media.module';
@@ -18,6 +19,7 @@ import { TrackModule } from './track/track.module';
     TrackModule,
     AnalyticsModule,
     ChatModule,
+    ContactModule,
     MediaModule,
     KnowledgeModule,
     AiModule,

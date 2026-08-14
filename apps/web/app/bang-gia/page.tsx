@@ -60,7 +60,7 @@ const PRICING_FAQ = [
   {
     question: "Các tab Facebook, Bài đăng, TikTok khác nhau thế nào?",
     answer:
-      "Chọn tab Facebook, Bài đăng hoặc TikTok. Mỗi gói là một thẻ (giá lớn + cam kết). Bấm “Xem chi tiết” để mở bảng đơn giá × số lượng × thành tiền.",
+      "Chọn tab Facebook, Bài đăng hoặc TikTok. Mỗi gói là một thẻ (giá lớn + cam kết) kèm bảng Dịch vụ / Thông tin / Thành tiền ngay bên dưới.",
   },
   {
     question: "Đọc cột Đơn giá, SL, Thành tiền như thế nào?",

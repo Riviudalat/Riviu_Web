@@ -10,6 +10,7 @@ import {
   resolvePricingIntent,
   type PricingTableId,
 } from "../lib/chat-pricing";
+import { tablesToChatText } from "../lib/package-tables";
 import { ChatPricingMenu, ChatPricingTable } from "./chat-pricing-cards";
 
 type ChatMessage = {
@@ -91,6 +92,18 @@ export function ChatWidget() {
     return () => window.removeEventListener("riviu:open-chat", openChat);
   }, []);
 
+  useEffect(() => {
+    if (!open) return;
+    try {
+      const key = "riviu-chat-greeting-logged";
+      if (localStorage.getItem(key)) return;
+      localStorage.setItem(key, "1");
+      logMessage("assistant", GREETING.content);
+    } catch {
+      // localStorage tắt — bỏ qua
+    }
+  }, [open]);
+
   const send = async (text: string) => {
     const content = text.trim();
     if (!content || typing) return;
@@ -104,12 +117,16 @@ export function ChatWidget() {
         pricing === "menu"
           ? "Riviu tách từng bảng giá riêng. Chọn một nhóm bên dưới — không gộp hết vào một tin."
           : `Bảng ${pricingTableLabel(pricing)}:`;
+      const loggedReply =
+        pricing === "menu"
+          ? reply
+          : `${reply}\n\n${tablesToChatText(pricing)}`;
       setMessages((prev) => [
         ...prev,
         { role: "assistant", content: reply, pricing },
       ]);
       logMessage("user", content);
-      logMessage("assistant", reply);
+      logMessage("assistant", loggedReply);
       return;
     }
 

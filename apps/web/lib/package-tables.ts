@@ -268,3 +268,20 @@ export function packageGroups(): PackageGroup[] {
 export function allPackageTables(): DetailTableModel[] {
   return packageGroups().flatMap((group) => group.tables);
 }
+
+/** Bản text bảng giá để ghi vào log chat — admin đọc đúng thứ khách thấy. */
+export function tablesToChatText(
+  group: Parameters<typeof tablesForGroup>[0],
+): string {
+  return tablesForGroup(group)
+    .map((table) => {
+      const lines = [
+        table.title,
+        ...table.rows.map((row) => `- ${row.service}: ${row.total}`),
+        table.totalAfter ? `Tổng: ${table.totalAfter}` : "",
+        table.note ? `Ghi chú: ${table.note}` : "",
+      ];
+      return lines.filter(Boolean).join("\n");
+    })
+    .join("\n\n");
+}
