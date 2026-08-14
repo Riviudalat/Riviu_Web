@@ -27,16 +27,18 @@ export default async function AdminEditorPage() {
   ]);
 
   return (
-    <div className="mx-auto max-w-none">
-      <div className="mb-4">
-        <h1 className="text-2xl font-black">Chỉnh sửa nội dung</h1>
-        <p className="mt-1 text-sm text-ink-soft">
-          Kéo thả section và block, sửa nội dung, chọn font, rồi bấm{" "}
-          <span className="font-bold">Publish</span> để xuất bản. Sửa hỏng thì
-          khôi phục từ lịch sử.
+    <div className="flex h-full min-h-0 flex-col">
+      <div className="shrink-0 border-b border-black/10 bg-white px-5 py-3">
+        <h1 className="text-lg font-black">Chỉnh sửa nội dung</h1>
+        <p className="mt-0.5 text-xs text-ink-soft">
+          Cột phải: đổi font và màu. Chọn một khối để sửa chữ của khối đó;
+          bấm vùng trống để đổi font cả trang. Xong thì{" "}
+          <span className="font-bold">Publish</span>.
         </p>
       </div>
-      <AdminPuckEditor initialData={data} revisions={revisions ?? []} />
+      <div className="min-h-0 flex-1">
+        <AdminPuckEditor initialData={data} revisions={revisions ?? []} />
+      </div>
     </div>
   );
 }

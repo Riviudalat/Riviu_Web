@@ -111,8 +111,8 @@ export function AdminPuckEditor({
   };
 
   return (
-    <div>
-      <div className="mb-4 flex flex-wrap items-center gap-3 rounded-2xl border border-black/10 bg-white p-3">
+    <div className="flex h-full min-h-0 flex-col">
+      <div className="flex shrink-0 flex-wrap items-center gap-3 border-b border-black/10 bg-white px-4 py-2">
         <ClockCounterClockwise size={18} className="ml-1 text-brand-500" />
         <select
           value={selectedRevision}
@@ -150,7 +150,7 @@ export function AdminPuckEditor({
         </button>
       </div>
 
-      <div className="relative h-[calc(100vh-12rem)] overflow-hidden rounded-2xl border border-black/10 bg-white">
+      <div className="riviu-puck relative min-h-0 flex-1 bg-white">
         {status ? (
           <div className="absolute top-3 left-1/2 z-50 -translate-x-1/2 rounded-full bg-ink px-5 py-2 text-xs font-bold text-white shadow-lg">
             {status}
@@ -160,6 +160,7 @@ export function AdminPuckEditor({
           config={puckConfig}
           data={sanitizePuckData(initialData) ?? buildDefaultPuckData()}
           onPublish={handlePublish}
+          height="100%"
           viewports={[
             { width: 375, label: "Mobile" },
             { width: 768, label: "Tablet" },

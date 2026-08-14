@@ -44,7 +44,7 @@ Ký hiệu: ⬜ chưa làm · 🚧 đang làm · ✅ hoàn thành
 | Login + guard | ✅ | Cookie httpOnly, guard trong (panel)/layout; form chỉ còn logo + 2 ô nhập |
 | Layout sidebar | ✅ | Phosphor icons; badge số form/chat mới |
 | Dashboard traffic (Recharts) | ✅ | Realtime, 30 ngày; hover dòng section hiện card “khách đang xem” (trang + anchor + mô tả) |
-| Editor kéo-thả (Puck) | ✅ | /admin/editor, Publish → PUT /api/content/home; Services có ImageField từng thẻ; Stats/kênh sửa số + ảnh |
+| Editor kéo-thả (Puck) | ✅ | Full-height; cột phải hiện font/màu; Publish → PUT /api/content/home |
 | Bài nổi bật CMS (/admin/insights) | ✅ | Thêm/xóa/sửa bài; upload ảnh (không hiện đường dẫn file) → PUT /api/content/bang-gia |
 | Block cơ bản (page builder) | ✅ | Heading, Text, Image, Button, Quote, Video, Spacer, Divider + Columns DropZone lồng nhau |
 | Biến thể layout section | ✅ | Hero split/center, Services stack/list/grid, nền, đảo vị trí, paddingY |
@@ -134,3 +134,4 @@ Ký hiệu: ⬜ chưa làm · 🚧 đang làm · ✅ hoàn thành
 | 2026-08-14 | Agent (Cursor) | Nav overlay trên thẻ giá; bỏ Hỏi Riviu; link Facebook kênh; lưu form ContactLead + /admin/leads; chat log đủ (chào + bảng text, 16k); toast/badge inbox admin | apps/web, apps/api |
 | 2026-08-14 | Agent (Cursor) | Admin Insights: thêm/xóa bài, ẩn path `/network/…`; Knowledge bỏ note PDF, form gọn hơn; gỡ note “Cần API + database” | apps/web/components/admin, leads, chat |
 | 2026-08-14 | Agent (Cursor) | Chat: render **in đậm** + danh sách; lăn chuột trong khung hội thoại (data-lenis-prevent, min-h-0) | apps/web/components/chat-widget.tsx, chat-markdown.tsx |
+| 2026-08-14 | Agent (Cursor) | Editor Puck full-height: hết cắt cột phải đổi font/màu | apps/web/components/admin/puck-editor.tsx, admin-shell.tsx |

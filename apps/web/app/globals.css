@@ -103,3 +103,13 @@ body {
   background: var(--color-brand-100);
   color: var(--color-ink);
 }
+
+/* Puck editor: không dùng 100dvh trong khung admin (cắt mất panel font/màu). */
+.riviu-puck,
+.riviu-puck > div {
+  height: 100%;
+  min-height: 0;
+}
+.riviu-puck [class*="_PuckLayout_"] {
+  height: 100% !important;
+}

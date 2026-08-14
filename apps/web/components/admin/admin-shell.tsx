@@ -1,13 +1,17 @@
 "use client";
 
 import Image from "next/image";
+import { usePathname } from "next/navigation";
 import { AdminInboxProvider } from "./admin-inbox";
 import { AdminNav } from "./nav";
 
 export function AdminShell({ children }: { children: React.ReactNode }) {
+  const pathname = usePathname();
+  const editor = pathname.startsWith("/admin/editor");
+
   return (
     <AdminInboxProvider>
-      <div className="min-h-screen bg-neutral-50">
+      <div className={editor ? "h-screen overflow-hidden bg-neutral-50" : "min-h-screen bg-neutral-50"}>
         <aside className="fixed inset-y-0 left-0 z-40 flex w-60 flex-col border-r border-black/10 bg-white p-5">
           <a href="/admin" className="mb-8 flex items-center px-2">
             <Image
@@ -23,7 +27,15 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
           </a>
           <AdminNav />
         </aside>
-        <div className="ml-60 min-h-screen p-6 md:p-8">{children}</div>
+        <div
+          className={
+            editor
+              ? "ml-60 flex h-screen flex-col overflow-hidden"
+              : "ml-60 min-h-screen p-6 md:p-8"
+          }
+        >
+          {children}
+        </div>
       </div>
     </AdminInboxProvider>
   );
