@@ -1,0 +1,21 @@
+services:
+  postgres:
+    image: postgres:17-alpine
+    container_name: riviu-postgres-dev
+    environment:
+      POSTGRES_USER: riviu
+      # Khớp với DATABASE_URL trong apps/api/.env (đã ALTER USER trên volume hiện có)
+      POSTGRES_PASSWORD: riviu123
+      POSTGRES_DB: riviu
+    ports:
+      - "5432:5432"
+    volumes:
+      - riviu_pgdata_dev:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U riviu -d riviu"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  riviu_pgdata_dev:

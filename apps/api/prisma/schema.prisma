@@ -1,0 +1,113 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model AdminUser {
+  id           String   @id @default(cuid())
+  email        String   @unique
+  passwordHash String
+  createdAt    DateTime @default(now())
+}
+
+model Page {
+  slug      String   @id
+  data      Json
+  updatedAt DateTime @updatedAt
+}
+
+model PageRevision {
+  id        String   @id @default(cuid())
+  slug      String
+  data      Json
+  createdAt DateTime @default(now())
+
+  @@index([slug, createdAt])
+}
+
+model KnowledgeItem {
+  id            String   @id @default(cuid())
+  title         String
+  content       String
+  keywords      String   @default("")
+  attachmentUrl String?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
+
+model Session {
+  id          String         @id
+  firstSeen   DateTime       @default(now())
+  lastSeen    DateTime       @default(now())
+  device      String?
+  browser     String?
+  os          String?
+  country     String?
+  referrer    String?
+  utmSource   String?
+  utmMedium   String?
+  utmCampaign String?
+  pageViews   PageView[]
+  sections    SectionEvent[]
+
+  @@index([lastSeen])
+}
+
+model PageView {
+  id         String   @id @default(cuid())
+  sessionId  String
+  session    Session  @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+  path       String
+  durationMs Int      @default(0)
+  createdAt  DateTime @default(now())
+
+  @@index([createdAt])
+  @@index([path])
+}
+
+model SectionEvent {
+  id        String   @id @default(cuid())
+  sessionId String
+  session   Session  @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+  path      String   @default("/")
+  sectionId String
+  dwellMs   Int      @default(0)
+  clicks    Int      @default(0)
+  createdAt DateTime @default(now())
+
+  @@index([sectionId])
+  @@index([path, sectionId])
+  @@index([createdAt])
+}
+
+model ChatSession {
+  id        String        @id
+  createdAt DateTime      @default(now())
+  messages  ChatMessage[]
+}
+
+model ChatMessage {
+  id        String      @id @default(cuid())
+  sessionId String
+  session   ChatSession @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+  role      String
+  content   String
+  source    String      @default("user")
+  createdAt DateTime    @default(now())
+
+  @@index([createdAt])
+}
+
+model AiConfig {
+  id           Int      @id @default(1)
+  enabled      Boolean  @default(false)
+  baseUrl      String   @default("")
+  model        String   @default("")
+  apiKey       String   @default("")
+  systemPrompt String   @default("")
+  updatedAt    DateTime @updatedAt
+}

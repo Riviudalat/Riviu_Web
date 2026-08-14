@@ -1,159 +1,79 @@
-# Turborepo starter
+# Riviu Web
 
-This Turborepo starter is maintained by the Turborepo core team.
+Website giới thiệu công ty **Riviu** (Công ty TNHH RIVICO) — nền tảng review ẩm thực & đời sống kiêm công ty truyền thông. Monorepo Turborepo.
 
-## Using this example
+> Quy tắc làm việc: đọc [STATUS.md](STATUS.md) trước khi sửa code, và cập nhật nó sau mỗi thay đổi. Agent AI xem thêm skill trong `.cursor/skills/riviu-web/`.
 
-Run the following command:
+## Cấu trúc
 
-```sh
-npx create-turbo@latest
+| Thư mục | Nội dung |
+|---|---|
+| `apps/web` | Next.js 16 — landing page + trang quản trị `/admin` (port 3000) |
+| `apps/api` | NestJS 11 + Prisma + PostgreSQL — content, tracking, analytics, chat log, auth (port 4000, prefix `/api`) |
+| `packages/*` | Config TypeScript/ESLint và UI dùng chung |
+| `nginx/` | Cấu hình reverse proxy cho production |
+
+## Chạy dev
+
+```bash
+pnpm install
+
+# 1. PostgreSQL (cần Docker Desktop đang chạy)
+docker compose -f docker-compose.dev.yml up -d
+
+# 2. Tạo bảng + tài khoản admin (lần đầu)
+pnpm --filter api exec prisma migrate dev
+
+# 3. Chạy app
+pnpm dev                    # tất cả, hoặc:
+pnpm --filter web dev       # chỉ landing  http://localhost:3000
+pnpm --filter api dev       # chỉ API      http://localhost:4000/api/health
 ```
 
-## What's inside?
+- Env mẫu: `apps/api/.env.example`, `apps/web/.env.example` (dev đã có sẵn `.env`/`.env.local`).
+- Đăng nhập quản trị: http://localhost:3000/admin/login — tài khoản theo `ADMIN_EMAIL`/`ADMIN_PASSWORD` trong `apps/api/.env`.
 
-This Turborepo includes the following packages/apps:
+## Trang quản trị `/admin`
 
-### Apps and Packages
+- **Dashboard** — traffic realtime, khách/lượt xem 30 ngày, thiết bị, trình duyệt, quốc gia, nguồn truy cập và **xếp hạng section được quan tâm nhất** (đo bằng thời gian xem + click từng section).
+- **Chỉnh sửa nội dung** — editor kéo-thả [Puck](https://puckeditor.com): sắp xếp section, sửa chữ, thêm/xóa, bấm Publish là trang chủ cập nhật.
+- **Hội thoại AI** — xem lại toàn bộ tin nhắn khách gửi qua chat widget.
 
-- `docs`: a [Next.js](https://nextjs.org/) app
-- `web`: another [Next.js](https://nextjs.org/) app
-- `@repo/ui`: a stub React component library shared by both `web` and `docs` applications
-- `@repo/eslint-config`: `eslint` configurations (includes `eslint-config-next` and `eslint-config-prettier`)
-- `@repo/typescript-config`: `tsconfig.json`s used throughout the monorepo
+## Kiểm tra chất lượng
 
-Each package/app is 100% [TypeScript](https://www.typescriptlang.org/).
-
-### Utilities
-
-This Turborepo has some additional tools already setup for you:
-
-- [TypeScript](https://www.typescriptlang.org/) for static type checking
-- [ESLint](https://eslint.org/) for code linting
-- [Prettier](https://prettier.io) for code formatting
-
-### Build
-
-To build all apps and packages, run the following command:
-
-With [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) installed (recommended):
-
-```sh
-cd my-turborepo
-turbo build
+```bash
+pnpm exec turbo run build lint check-types
 ```
 
-Without global `turbo`, use your package manager:
+## Production (Docker + nginx)
 
-```sh
-cd my-turborepo
-npx turbo build
-pnpm dlx turbo build
-pnpm exec turbo build
+```bash
+cp .env.example .env        # POSTGRES_PASSWORD, JWT_SECRET, ADMIN_*, SITE_URL
+docker compose up -d --build
+# → http://localhost (nginx: "/" vào web, "/api" vào NestJS)
+# SITE_URL được nhúng vào Next lúc build (canonical/sitemap/OG) qua build-arg.
 ```
 
-You can build a specific package by using a [filter](https://turborepo.dev/docs/crafting-your-repository/running-tasks#using-filters):
+## Deploy VPS (Ubuntu)
 
-With [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) installed:
+1. Cài Docker: `curl -fsSL https://get.docker.com | sh`
+2. Clone repo và tạo env:
 
-```sh
-turbo build --filter=docs
+```bash
+git clone https://github.com/Riviudalat/Riviu_Web.git && cd Riviu_Web
+cp .env.example .env && nano .env   # đặt mật khẩu mạnh
 ```
 
-Without global `turbo`:
+3. Chạy: `docker compose up -d --build`
+4. Trỏ DNS domain (bản ghi A) về IP của VPS — web chạy ở port 80.
+5. Khi có domain, thêm HTTPS bằng certbot (cấp chứng chỉ Let's Encrypt rồi cập nhật `nginx/nginx.conf` listen 443 + đường dẫn chứng chỉ).
 
-```sh
-npx turbo build --filter=docs
-pnpm exec turbo build --filter=docs
-pnpm exec turbo build --filter=docs
+Cập nhật phiên bản mới trên VPS:
+
+```bash
+git pull && docker compose up -d --build
 ```
 
-### Develop
+## Kế hoạch AI chat
 
-To develop all apps and packages, run the following command:
-
-With [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) installed (recommended):
-
-```sh
-cd my-turborepo
-turbo dev
-```
-
-Without global `turbo`, use your package manager:
-
-```sh
-cd my-turborepo
-npx turbo dev
-pnpm exec turbo dev
-pnpm exec turbo dev
-```
-
-You can develop a specific package by using a [filter](https://turborepo.dev/docs/crafting-your-repository/running-tasks#using-filters):
-
-With [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) installed:
-
-```sh
-turbo dev --filter=web
-```
-
-Without global `turbo`:
-
-```sh
-npx turbo dev --filter=web
-pnpm exec turbo dev --filter=web
-pnpm exec turbo dev --filter=web
-```
-
-### Remote Caching
-
-> [!TIP]
-> Vercel Remote Cache is free for all plans. Get started today at [vercel.com](https://vercel.com/signup?utm_source=remote-cache-sdk&utm_campaign=free_remote_cache).
-
-Turborepo can use a technique known as [Remote Caching](https://turborepo.dev/docs/core-concepts/remote-caching) to share cache artifacts across machines, enabling you to share build caches with your team and CI/CD pipelines.
-
-By default, Turborepo will cache locally. To enable Remote Caching you will need an account with Vercel. If you don't have an account you can [create one](https://vercel.com/signup?utm_source=turborepo-examples), then enter the following commands:
-
-With [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) installed (recommended):
-
-```sh
-cd my-turborepo
-turbo login
-```
-
-Without global `turbo`, use your package manager:
-
-```sh
-cd my-turborepo
-npx turbo login
-pnpm exec turbo login
-pnpm exec turbo login
-```
-
-This will authenticate the Turborepo CLI with your [Vercel account](https://vercel.com/docs/concepts/personal-accounts/overview).
-
-Next, you can link your Turborepo to your Remote Cache by running the following command from the root of your Turborepo:
-
-With [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) installed:
-
-```sh
-turbo link
-```
-
-Without global `turbo`:
-
-```sh
-npx turbo link
-pnpm exec turbo link
-pnpm exec turbo link
-```
-
-## Useful Links
-
-Learn more about the power of Turborepo:
-
-- [Tasks](https://turborepo.dev/docs/crafting-your-repository/running-tasks)
-- [Caching](https://turborepo.dev/docs/crafting-your-repository/caching)
-- [Remote Caching](https://turborepo.dev/docs/core-concepts/remote-caching)
-- [Filtering](https://turborepo.dev/docs/crafting-your-repository/running-tasks#using-filters)
-- [Configuration Options](https://turborepo.dev/docs/reference/configuration)
-- [CLI Usage](https://turborepo.dev/docs/reference/command-line-reference)
+Chat widget hiện trả lời placeholder và lưu toàn bộ hội thoại vào DB. Khi tích hợp AI thật: dùng [assistant-ui](https://github.com/assistant-ui/assistant-ui) + [Vercel AI SDK](https://github.com/vercel/ai), thêm endpoint stream trong `apps/api` (cần API key của nhà cung cấp model).

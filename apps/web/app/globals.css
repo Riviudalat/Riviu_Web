@@ -1,50 +1,105 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans:
+    var(--font-be-vietnam), ui-sans-serif, system-ui, -apple-system,
+    "Segoe UI", sans-serif;
+
+  /* Màu thương hiệu Riviu — phẳng, không gradient */
+  --color-brand-50: #fff4ec;
+  --color-brand-100: #ffe8d6;
+  --color-brand-200: #ffd0ad;
+  --color-brand-300: #ffb37d;
+  --color-brand-400: #ff8c3d;
+  --color-brand-500: #ff6600;
+  --color-brand-600: #e05a00;
+  --color-brand-700: #b84a00;
+  --color-brand-800: #8a3800;
+  --color-brand-900: #5c2500;
+
+  --color-ink: #121212;
+  --color-ink-soft: #4b4b4b;
+
+  --animate-marquee: marquee 40s linear infinite;
+  --animate-marquee-reverse: marquee-reverse 46s linear infinite;
+}
+
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes marquee-reverse {
+  from {
+    transform: translateX(-50%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+/* Font chọn từ editor (root fields Puck).
+   Mặc định: Bricolage Grotesque cho tiêu đề, Be Vietnam Pro cho nội dung. */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
-html,
-body {
-  max-width: 100vw;
-  overflow-x: hidden;
+  --font-display: var(--font-bricolage);
+  --font-body: var(--font-be-vietnam);
 }
 
 body {
-  color: var(--foreground);
-  background: var(--background);
+  font-family: var(--font-body), ui-sans-serif, system-ui, sans-serif;
 }
 
-* {
-  box-sizing: border-box;
-  padding: 0;
-  margin: 0;
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-display), ui-sans-serif, system-ui, sans-serif;
 }
 
-a {
-  color: inherit;
-  text-decoration: none;
+/* Con trỏ tùy chỉnh */
+.cursor-custom,
+.cursor-custom * {
+  cursor: none !important;
 }
 
-.imgDark {
-  display: none;
+/* Accessibility */
+:focus-visible {
+  outline: 2px solid var(--color-brand-500);
+  outline-offset: 2px;
 }
 
-@media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
-  }
+/* Lenis smooth scroll */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
 
-  .imgLight {
-    display: none;
-  }
-  .imgDark {
-    display: unset;
-  }
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+body {
+  background: #ffffff;
+  color: var(--color-ink);
+}
+
+::selection {
+  background: var(--color-brand-100);
+  color: var(--color-ink);
 }
